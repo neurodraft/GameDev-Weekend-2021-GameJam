@@ -16,6 +16,8 @@ public class UI : MonoBehaviour
 
     public DominosGenerator dominosGenerator;
 
+    public Vector3 dominoDimensions = new Vector3(2, 4, 0.5f);
+
     public float dominoScale = 1f;
     void Start()
     {
@@ -26,40 +28,52 @@ public class UI : MonoBehaviour
     void Update()
     {
         if(creationMode){
+                
+            dominoOverlayInstance.transform.Rotate(0, Input.mouseScrollDelta.y * 900f * Time.deltaTime, 0, Space.Self);            
+        
+            
             if(Input.GetKey(KeyCode.Z)){
                 dominoOverlayInstance.transform.Rotate(0, 90f * Time.deltaTime, 0, Space.Self);
             }
             if(Input.GetKey(KeyCode.X)){
                 dominoOverlayInstance.transform.Rotate(0, -90f * Time.deltaTime, 0, Space.Self);
             }
+            
 
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit, 999f, 1 << 0))
                 {
+                    Debug.Log(hit.collider.tag);
                     //Debug.Log(hit.collider.name);
-                    if(hit.collider.name == "WorldPlane"){
+                    if(hit.collider.CompareTag("BuildPlane")){
+
                         dominoOverlayInstance.transform.position = hit.point + dominoOverlayOffset;
 
-                        if(Input.GetMouseButtonDown(0)){
-                            dominosGenerator.createDomino(dominoOverlayInstance.transform);
-                            dominoRotation = dominoOverlayInstance.transform.rotation;
-                            Destroy(dominoOverlayInstance);
-                            creationMode = false;
+                        if(Input.GetMouseButtonDown(0))
+                        {
+                            Debug.Log("Detected click");
+                            if(dominoOverlayInstance.GetComponent<DominoOverlay>().canBuild){
+                                dominosGenerator.createDomino(dominoOverlayInstance.transform);
+                                dominoRotation = dominoOverlayInstance.transform.rotation;
+                                Destroy(dominoOverlayInstance);
+                                creationMode = false;
+                            }
+                            
                         }
                     }
                 }
         } else {
-            if(Input.GetKeyDown(KeyCode.C)){
+            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1)){
                 dominoOverlayInstance = Instantiate(dominoOverlayPrefab, Vector3.zero, dominoRotation, this.transform);
 
                 dominoScale += 1/4f;
 
-                Vector3 dimensions = dominoOverlayInstance.transform.localScale * dominoScale;
-                dominoOverlayInstance.transform.localScale = dimensions;
+                Vector3 dimensions = dominoDimensions * dominoScale;
+                dominoOverlayInstance.transform.localScale *= dominoScale;
 
-                dominoOverlayOffset = new Vector3(0, dominoOverlayInstance.transform.localScale.y/2f, 0);
+                dominoOverlayOffset = new Vector3(0, dimensions.y/2f, 0);
                 creationMode = true;
             }
         }

@@ -10,20 +10,28 @@ public class DominosGenerator : MonoBehaviour
     public GameObject currentFalling;
 
     public int numberOfDominos = 5;
+
+    public float dominoDensity = 1f;
+
+    private Vector3 dominoDimensions = new Vector3(2, 4, 0.5f);
+
+    private float baseMass;
     void Start()
     {
+        baseMass = dominoDimensions.x * dominoDimensions.y * dominoDimensions.z * dominoDensity;
+
         float previousZ = this.transform.position.z;
         for(int i = 0; i < numberOfDominos; i++){
-            Vector3 dimensions = dominoPrefab.transform.localScale;
-            dimensions = dimensions + dimensions * i/4;
-            GameObject dominoInstance = Instantiate(dominoPrefab, new Vector3(0, dimensions.y / 2, previousZ), Quaternion.identity, this.transform);
+            float scale = 1 + i/4.0f;
+            Vector3 dimensions = dominoDimensions * scale;
+            GameObject dominoInstance = Instantiate(dominoPrefab, new Vector3(this.transform.position.x, dimensions.y / 2, previousZ), Quaternion.identity, this.transform);
             previousZ = previousZ + dimensions.y / 1.5f;
-            dominoInstance.transform.localScale = dimensions;
-            dominoInstance.GetComponent<Rigidbody>().mass = dimensions.x * dimensions.y * dimensions.z;
+            dominoInstance.transform.localScale = dominoInstance.transform.localScale * scale;
+            dominoInstance.GetComponent<Rigidbody>().mass = baseMass * scale;
             
             if(i == 0){
                 dominoInstance.tag = "Pushable";
-                dominoInstance.GetComponent<MeshRenderer>().material.color = Color.blue;
+                dominoInstance.GetComponent<MeshRenderer>().material.color = new Color(0.5f, 0.6f, 1f);
             }
         }
         
@@ -38,7 +46,7 @@ public class DominosGenerator : MonoBehaviour
     public GameObject createDomino(Transform t){
         GameObject dominoInstance = Instantiate(dominoPrefab, t.position, t.rotation, this.transform);
         dominoInstance.transform.localScale = t.localScale;
-        dominoInstance.GetComponent<Rigidbody>().mass = t.localScale.x * t.localScale.y * t.localScale.z;
+        dominoInstance.GetComponent<Rigidbody>().mass = baseMass * t.localScale.x;
         return dominoInstance;
     }
 
