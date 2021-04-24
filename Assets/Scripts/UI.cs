@@ -35,7 +35,6 @@ public class UI : MonoBehaviour
 
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.Log("ray");
             RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {

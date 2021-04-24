@@ -21,10 +21,10 @@ public class CameraHelper : MonoBehaviour
         if(playerTransform != null){
             this.transform.position = Vector3.Lerp(this.transform.position, playerTransform.position, followingSpeed * Time.deltaTime);
         }
-        if(Input.GetKey(KeyCode.Q)){
+        if(Input.GetKey(KeyCode.E)){
             this.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0, Space.Self);
         }
-        if(Input.GetKey(KeyCode.E)){
+        if(Input.GetKey(KeyCode.Q)){
             this.transform.Rotate(0, -rotationSpeed * Time.deltaTime, 0, Space.Self);
         }
     }

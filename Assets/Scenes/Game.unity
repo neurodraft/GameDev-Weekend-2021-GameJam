@@ -167,7 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dominoPrefab: {fileID: 7261520815319614977, guid: 9445aa1ca276ea770aceae29335b1910, type: 3}
-  numberOfDominos: 1
+  currentFalling: {fileID: 0}
+  numberOfDominos: 10
 --- !u!1 &561406225
 GameObject:
   m_ObjectHideFlags: 0

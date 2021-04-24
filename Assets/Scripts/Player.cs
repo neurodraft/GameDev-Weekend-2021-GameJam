@@ -73,5 +73,10 @@ public class Player : MonoBehaviour
 
         // Apply the push
         body.velocity = pushDir * pushPower;
+
+        Domino domino;
+        if(hit.collider.TryGetComponent<Domino>(out domino)){
+            domino.Fall();
+        }
     }
 }
