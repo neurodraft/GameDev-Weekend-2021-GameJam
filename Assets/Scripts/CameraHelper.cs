@@ -9,6 +9,7 @@ public class CameraHelper : MonoBehaviour
     public float followingSpeed = 2f;
 
     public float rotationSpeed = 90f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +22,12 @@ public class CameraHelper : MonoBehaviour
         if(playerTransform != null){
             this.transform.position = Vector3.Lerp(this.transform.position, playerTransform.position, followingSpeed * Time.deltaTime);
         }
-        if(Input.GetKey(KeyCode.E)){
+        int border = Screen.width / 6;
+        
+        if(Input.GetKey(KeyCode.E) || Input.mousePosition.x > Screen.width - border){
             this.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0, Space.Self);
         }
-        if(Input.GetKey(KeyCode.Q)){
+        if(Input.GetKey(KeyCode.Q) || Input.mousePosition.x < border){
             this.transform.Rotate(0, -rotationSpeed * Time.deltaTime, 0, Space.Self);
         }
     }
