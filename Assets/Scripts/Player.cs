@@ -50,9 +50,6 @@ public class Player : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if(!hit.collider.CompareTag("Pushable")){
-            return;
-        }
         
         Rigidbody body = hit.collider.attachedRigidbody;
 
@@ -68,6 +65,14 @@ public class Player : MonoBehaviour
             return;
         }
 
+        Domino domino;
+        if(hit.collider.TryGetComponent<Domino>(out domino)){
+            if(!domino.isPushable){
+                return;
+            }
+            domino.Fall();
+        }
+
         
 
         // Calculate push direction from move direction,
@@ -80,9 +85,6 @@ public class Player : MonoBehaviour
         // Apply the push
         body.velocity = pushDir * pushPower;
 
-        Domino domino;
-        if(hit.collider.TryGetComponent<Domino>(out domino)){
-            domino.Fall();
-        }
+
     }
 }

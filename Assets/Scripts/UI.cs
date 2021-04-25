@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using TMPro;
+using System;
 
 public class UI : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class UI : MonoBehaviour
     public Vector3 dominoDimensions = new Vector3(2, 4, 0.5f);
 
     public float dominoScale = 1f;
+
+    private int dominoAmount = 0;
+
+    public  TMP_Text dominoAmountText;
     void Start()
     {
         
@@ -65,16 +70,16 @@ public class UI : MonoBehaviour
 
                         if(Input.GetMouseButtonDown(0))
                         {
+                            DecrementDominoAmount();
                             dominosGenerator.createDomino(dominoOverlayInstance.transform);
                             dominoRotation = dominoOverlayInstance.transform.rotation;
                             Destroy(dominoOverlayInstance);
                             creationMode = false;
-							Time.timeScale = 1.0f;
                         }
                     }
                 }
         } else {
-            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1)){
+            if(dominoAmount > 0 && (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1))){
                 if(dominoOverlayInstance == null){
                     dominoOverlayInstance = Instantiate(dominoOverlayPrefab, Vector3.zero, dominoRotation, this.transform);
 
@@ -89,11 +94,18 @@ public class UI : MonoBehaviour
                 }
                 
                 creationMode = true;
-				
-				if (Time.timeScale == 1.0f){
-					Time.timeScale = 0.5f;
-				}
+			
             }
         }
+    }
+
+    public void IncrementDominoAmount(){
+        dominoAmount += 1;
+        dominoAmountText.text = dominoAmount.ToString();
+    }
+
+    public void DecrementDominoAmount(){
+        dominoAmount -= 1;
+        dominoAmountText.text = dominoAmount.ToString();
     }
 }
