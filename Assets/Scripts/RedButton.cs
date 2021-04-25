@@ -37,6 +37,7 @@ public class RedButton : MonoBehaviour
             if(button.localPosition == pressedPosition){
                 fullyPressed = true;
                 particleSystem.Play();
+                ui.StopSound();
                 ui.ShowVictory();
             }
         }

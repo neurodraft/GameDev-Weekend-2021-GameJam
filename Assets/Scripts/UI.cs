@@ -167,7 +167,7 @@ public class UI : MonoBehaviour
         dominoAmountText.text = dominoAmount.ToString();
     }
 
-    public void mutesound() 
+    public void StopSound() 
     {
         instruct.SetActive(false);
         instruct2.SetActive(false);
