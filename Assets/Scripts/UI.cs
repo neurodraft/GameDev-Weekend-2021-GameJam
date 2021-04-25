@@ -65,14 +65,11 @@ public class UI : MonoBehaviour
 
                         if(Input.GetMouseButtonDown(0))
                         {
-                            Debug.Log("Detected click");
-                            if(dominoOverlayInstance.GetComponent<DominoOverlay>().canBuild){
-                                dominosGenerator.createDomino(dominoOverlayInstance.transform);
-                                dominoRotation = dominoOverlayInstance.transform.rotation;
-                                Destroy(dominoOverlayInstance);
-                                creationMode = false;
-                            }
-                            
+                            dominosGenerator.createDomino(dominoOverlayInstance.transform);
+                            dominoRotation = dominoOverlayInstance.transform.rotation;
+                            Destroy(dominoOverlayInstance);
+                            creationMode = false;
+							Time.timeScale = 1.0f;
                         }
                     }
                 }
@@ -92,6 +89,10 @@ public class UI : MonoBehaviour
                 }
                 
                 creationMode = true;
+				
+				if (Time.timeScale == 1.0f){
+					Time.timeScale = 0.5f;
+				}
             }
         }
     }
