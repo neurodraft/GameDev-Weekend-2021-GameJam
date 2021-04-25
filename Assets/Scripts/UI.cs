@@ -10,6 +10,12 @@ public class UI : MonoBehaviour
     private bool creationMode = false;
     // Start is called before the first frame update
 
+    public GameObject pausemenu;
+    public bool activename;
+
+    public GameObject victory;
+    public bool activewin;
+
     public GameObject dominoOverlayPrefab;
 
     private GameObject dominoOverlayInstance;
@@ -30,6 +36,7 @@ public class UI : MonoBehaviour
     public GameObject[] levels;
 
     public GameObject currentLevel;
+
     void Start()
     {
         currentLevel = Instantiate(levels[0], transform.parent);
@@ -38,6 +45,16 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(activename == false) {
+                pausemenu.SetActive(true);
+            } else {
+                pausemenu.SetActive(false);
+            }
+        }
+
         if(Input.GetKey(KeyCode.R)){
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             restartCurrentLevel();
@@ -135,4 +152,11 @@ public class UI : MonoBehaviour
         dominoAmountText.text = dominoAmount.ToString();
     }
 
+    public void ShowVictory()
+    {
+        if(activewin == false) {
+            victory.SetActive(true);
+        } 
+        //NextLevel();
+    }
 }
