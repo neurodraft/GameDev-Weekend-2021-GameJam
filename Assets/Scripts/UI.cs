@@ -169,12 +169,13 @@ public class UI : MonoBehaviour
 
     public void destroyCurrentLevel()
     {
-        if (currentLevel != null)
+        if(currentLevel != null)
         {
             Destroy(currentLevel);
             restoreValues();
         }
     }
+
     public void StopSound() 
     {
         instruct.SetActive(false);
