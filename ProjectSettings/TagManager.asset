@@ -3,13 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Pushable
-<<<<<<< HEAD
-  - Domino
-=======
-  - BuildPlane
->>>>>>> 3e5e1c13c751a995f8b217ac4f29b9f3c7723681
+  tags: []
   layers:
   - Default
   - TransparentFX
