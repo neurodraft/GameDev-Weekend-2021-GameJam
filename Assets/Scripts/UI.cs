@@ -14,7 +14,8 @@ public class UI : MonoBehaviour
     public bool activename;
 
     public GameObject victory;
-    public bool activewin;
+    public GameObject instruct;
+    public GameObject instruct2;
 
     public GameObject dominoOverlayPrefab;
 
@@ -148,7 +149,7 @@ public class UI : MonoBehaviour
         if(currentLevel != null)
         {
             Destroy(currentLevel);
-            currentLevel = Instantiate(levels[0], transform.parent);
+            currentLevel = Instantiate(levels[currentLevelId], transform.parent);
             restoreValues();
         }
         
@@ -156,7 +157,7 @@ public class UI : MonoBehaviour
 
     public void nextLevel()
     {
-        changeLevel(currentLevelId++);
+        changeLevel(currentLevelId+1);
     }
 
     private void restoreValues()
@@ -168,18 +169,21 @@ public class UI : MonoBehaviour
 
     public void destroyCurrentLevel()
     {
-        if(currentLevel != null)
+        if (currentLevel != null)
         {
             Destroy(currentLevel);
             restoreValues();
         }
     }
+    public void StopSound() 
+    {
+        instruct.SetActive(false);
+        instruct2.SetActive(false);
+    }
 
     public void ShowVictory()
     {
-        if(activewin == false) {
-            victory.SetActive(true);
-        } 
+        victory.SetActive(true);
         //NextLevel();
     }
 }
