@@ -40,7 +40,7 @@ public class UI : MonoBehaviour
     private int currentLevelId;
     void Start()
     {
-        //changeLevel(0);
+        changeLevel(2);
     }
 
     // Update is called once per frame
@@ -164,6 +164,15 @@ public class UI : MonoBehaviour
         dominoScale = 1f;
         dominoAmount = 0;
         dominoAmountText.text = dominoAmount.ToString();
+    }
+
+    public void destroyCurrentLevel()
+    {
+        if(currentLevel != null)
+        {
+            Destroy(currentLevel);
+            restoreValues();
+        }
     }
 
     public void ShowVictory()

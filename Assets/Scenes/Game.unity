@@ -692,14 +692,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43690560d76c6454a67277a02955d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausemenu: {fileID: 0}
+  activename: 0
+  victory: {fileID: 0}
+  activewin: 0
   dominoOverlayPrefab: {fileID: 8269396966416000404, guid: 54d2f4383b124f085b6d656aa521f851, type: 3}
   dominosGenerator: {fileID: 0}
   dominoDimensions: {x: 2, y: 4, z: 0.5}
   dominoScale: 1
+  dominoAmount: 20
   dominoAmountText: {fileID: 702182981}
   levels:
   - {fileID: 2389915243490658470, guid: ac98aa7a3ba89fa4e82ac7a0ce255674, type: 3}
   - {fileID: 2389915243490658470, guid: a16514929511d0b45b335527906722bf, type: 3}
+  - {fileID: 2389915243490658470, guid: 1207cf3b29e579c41a3122ccdec40d9c, type: 3}
   currentLevel: {fileID: 0}
 --- !u!1 &1350909235
 GameObject:
