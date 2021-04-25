@@ -30,7 +30,7 @@ public class DominosGenerator : MonoBehaviour
             dominoInstance.GetComponent<Rigidbody>().mass = baseMass * scale;
             
             if(i == 0){
-                dominoInstance.tag = "Pushable";
+                dominoInstance.GetComponent<Domino>().isPushable = true;
                 dominoInstance.GetComponent<MeshRenderer>().material.color = new Color(0.5f, 0.6f, 1f);
             }
         }

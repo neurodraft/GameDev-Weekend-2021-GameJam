@@ -14,9 +14,12 @@ public class Player : MonoBehaviour
 
     public float pushPower = 2.0f;
 
+    private Animator animator;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -35,7 +38,10 @@ public class Player : MonoBehaviour
 
         if (move != Vector3.zero)
         {
+            animator.SetBool("isRunning", true);
             gameObject.transform.forward = move;
+        } else {
+            animator.SetBool("isRunning", false);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -44,9 +50,6 @@ public class Player : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if(!hit.collider.CompareTag("Pushable")){
-            return;
-        }
         
         Rigidbody body = hit.collider.attachedRigidbody;
 
@@ -62,6 +65,14 @@ public class Player : MonoBehaviour
             return;
         }
 
+        Domino domino;
+        if(hit.collider.TryGetComponent<Domino>(out domino)){
+            if(!domino.isPushable){
+                return;
+            }
+            domino.Fall();
+        }
+
         
 
         // Calculate push direction from move direction,
@@ -74,9 +85,6 @@ public class Player : MonoBehaviour
         // Apply the push
         body.velocity = pushDir * pushPower;
 
-        Domino domino;
-        if(hit.collider.TryGetComponent<Domino>(out domino)){
-            domino.Fall();
-        }
+
     }
 }

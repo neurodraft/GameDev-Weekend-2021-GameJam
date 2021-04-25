@@ -5,6 +5,8 @@ using UnityEngine;
 public class Domino : MonoBehaviour
 {
     private bool isStanding = true;
+
+    public bool isPushable = false;
     // Start is called before the first frame update
     void Start()
     {

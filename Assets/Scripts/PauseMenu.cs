@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     public bool activename;
     
     void Update() {
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             if(activename == false) {
                 pausemenu.SetActive(true);

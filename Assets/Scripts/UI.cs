@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+using System;
 
 public class UI : MonoBehaviour
 {
@@ -19,6 +22,10 @@ public class UI : MonoBehaviour
     public Vector3 dominoDimensions = new Vector3(2, 4, 0.5f);
 
     public float dominoScale = 1f;
+
+    private int dominoAmount = 0;
+
+    public  TMP_Text dominoAmountText;
     void Start()
     {
         
@@ -27,9 +34,19 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.R)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //Application.LoadLevel (Application.loadedLevel);
+        }
+ 
         if(creationMode){
-                
-            dominoOverlayInstance.transform.Rotate(0, Input.mouseScrollDelta.y * 900f * Time.deltaTime, 0, Space.Self);            
+            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1)){
+                creationMode = false;
+                dominoOverlayInstance.SetActive(false);
+                return;
+            }
+
+            dominoOverlayInstance.transform.Rotate(0, Input.mouseScrollDelta.y * 450f * Time.deltaTime, 0, Space.Self);            
         
             
             if(Input.GetKey(KeyCode.Z)){
@@ -53,30 +70,46 @@ public class UI : MonoBehaviour
 
                         if(Input.GetMouseButtonDown(0))
                         {
+                            DecrementDominoAmount();
                             dominosGenerator.createDomino(dominoOverlayInstance.transform);
                             dominoRotation = dominoOverlayInstance.transform.rotation;
                             Destroy(dominoOverlayInstance);
                             creationMode = false;
-							Time.timeScale = 1.0f;
                         }
                     }
                 }
         } else {
-            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1)){
-                dominoOverlayInstance = Instantiate(dominoOverlayPrefab, Vector3.zero, dominoRotation, this.transform);
+            if(dominoAmount > 0 && (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1))){
+                if(dominoOverlayInstance == null){
+                    dominoOverlayInstance = Instantiate(dominoOverlayPrefab, Vector3.zero, dominoRotation, this.transform);
 
-                dominoScale += 1/4f;
+                    dominoScale += 1/4f;
 
-                Vector3 dimensions = dominoDimensions * dominoScale;
-                dominoOverlayInstance.transform.localScale *= dominoScale;
+                    Vector3 dimensions = dominoDimensions * dominoScale;
+                    dominoOverlayInstance.transform.localScale *= dominoScale;
 
-                dominoOverlayOffset = new Vector3(0, dimensions.y/2f, 0);
+                    dominoOverlayOffset = new Vector3(0, dimensions.y/2f, 0);
+                }else{
+                    dominoOverlayInstance.SetActive(true);
+                }
+                
                 creationMode = true;
-				
-				if (Time.timeScale == 1.0f){
-					Time.timeScale = 0.5f;
-				}
+			
             }
         }
+    }
+
+    public void IncrementDominoAmount(){
+        dominoAmount += 1;
+        dominoAmountText.text = dominoAmount.ToString();
+    }
+
+    public void DecrementDominoAmount(){
+        dominoAmount -= 1;
+        dominoAmountText.text = dominoAmount.ToString();
+    }
+
+    public void Level1(){
+        
     }
 }
