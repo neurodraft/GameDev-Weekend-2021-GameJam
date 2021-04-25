@@ -14,6 +14,7 @@ public class Power : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ui = GameObject.Find("UI").gameObject.GetComponent<UI>() ;
         sphere = transform.Find("Sphere").gameObject;
         domino = sphere.transform.Find("Domino").gameObject;
         particleSystem = GetComponent<ParticleSystem>();

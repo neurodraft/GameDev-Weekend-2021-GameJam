@@ -14,9 +14,15 @@ public class RedButton : MonoBehaviour
     private float timer = 0;
 
     private ParticleSystem particleSystem;
+
+    public UI ui;
     // Start is called before  the first frame update
     void Start()
     {
+        if (ui == null)
+        {
+            ui = GameObject.Find("UI").gameObject.GetComponent<UI>();
+        }
         button = transform.Find("Button");
         originalPosition = button.localPosition;
 
