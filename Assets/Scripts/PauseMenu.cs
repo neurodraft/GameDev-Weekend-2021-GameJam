@@ -5,15 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public void Continue () {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    public void MainMenu () {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
-    }
-
-    public void QuitGame () {
-        Application.Quit();
+    public GameObject pausemenu;
+    public bool activename;
+    
+    void Update() {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            if(activename == false) {
+                pausemenu.SetActive(true);
+            } else {
+                pausemenu.SetActive(false);
+            }
+        }
     }
 }
