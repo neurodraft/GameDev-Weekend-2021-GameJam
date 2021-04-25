@@ -29,7 +29,7 @@ public class DominosGenerator : MonoBehaviour
         for(int i = 0; i < numberOfDominos; i++){
             float scale = 1 + i/4.0f;
             Vector3 dimensions = dominoDimensions * scale;
-            GameObject dominoInstance = Instantiate(dominoPrefab, new Vector3(this.transform.position.x, dimensions.y / 2, previousZ), Quaternion.identity, this.transform);
+            GameObject dominoInstance = Instantiate(dominoPrefab, new Vector3(this.transform.position.x, this.transform.position.y + dimensions.y / 2, previousZ), Quaternion.identity, this.transform);
             previousZ = previousZ + dimensions.y / 1.5f;
             dominoInstance.transform.localScale = dominoInstance.transform.localScale * scale;
             dominoInstance.GetComponent<Rigidbody>().mass = baseMass * scale;

@@ -23,16 +23,18 @@ public class UI : MonoBehaviour
 
     public float dominoScale = 1f;
 
-    private int dominoAmount = 0;
+    public int dominoAmount = 0;
 
     public  TMP_Text dominoAmountText;
 
     public GameObject[] levels;
 
     public GameObject currentLevel;
+
+    private int currentLevelId;
     void Start()
     {
-        currentLevel = Instantiate(levels[0], transform.parent);
+        //changeLevel(0);
     }
 
     // Update is called once per frame
@@ -116,16 +118,29 @@ public class UI : MonoBehaviour
 
     public void changeLevel(int levelId)
     {
-        Destroy(currentLevel);
+        if (currentLevel != null)
+        {
+            Destroy(currentLevel);
+        }
         currentLevel = Instantiate(levels[levelId], transform.parent);
         restoreValues();
+        currentLevelId = levelId;
     }
 
     public void restartCurrentLevel()
     {
-        Destroy(currentLevel);
-        currentLevel = Instantiate(levels[0], transform.parent);
-        restoreValues();
+        if(currentLevel != null)
+        {
+            Destroy(currentLevel);
+            currentLevel = Instantiate(levels[0], transform.parent);
+            restoreValues();
+        }
+        
+    }
+
+    public void nextLevel()
+    {
+        changeLevel(currentLevelId++);
     }
 
     private void restoreValues()
