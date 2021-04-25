@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class UI : MonoBehaviour
 {
@@ -27,9 +29,19 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.R)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //Application.LoadLevel (Application.loadedLevel);
+        }
+ 
         if(creationMode){
-                
-            dominoOverlayInstance.transform.Rotate(0, Input.mouseScrollDelta.y * 900f * Time.deltaTime, 0, Space.Self);            
+            if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1)){
+                creationMode = false;
+                dominoOverlayInstance.SetActive(false);
+                return;
+            }
+
+            dominoOverlayInstance.transform.Rotate(0, Input.mouseScrollDelta.y * 450f * Time.deltaTime, 0, Space.Self);            
         
             
             if(Input.GetKey(KeyCode.Z)){
@@ -66,14 +78,19 @@ public class UI : MonoBehaviour
                 }
         } else {
             if(Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Mouse1)){
-                dominoOverlayInstance = Instantiate(dominoOverlayPrefab, Vector3.zero, dominoRotation, this.transform);
+                if(dominoOverlayInstance == null){
+                    dominoOverlayInstance = Instantiate(dominoOverlayPrefab, Vector3.zero, dominoRotation, this.transform);
 
-                dominoScale += 1/4f;
+                    dominoScale += 1/4f;
 
-                Vector3 dimensions = dominoDimensions * dominoScale;
-                dominoOverlayInstance.transform.localScale *= dominoScale;
+                    Vector3 dimensions = dominoDimensions * dominoScale;
+                    dominoOverlayInstance.transform.localScale *= dominoScale;
 
-                dominoOverlayOffset = new Vector3(0, dimensions.y/2f, 0);
+                    dominoOverlayOffset = new Vector3(0, dimensions.y/2f, 0);
+                }else{
+                    dominoOverlayInstance.SetActive(true);
+                }
+                
                 creationMode = true;
             }
         }

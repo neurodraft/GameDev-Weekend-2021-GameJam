@@ -14,9 +14,12 @@ public class Player : MonoBehaviour
 
     public float pushPower = 2.0f;
 
+    private Animator animator;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -35,7 +38,10 @@ public class Player : MonoBehaviour
 
         if (move != Vector3.zero)
         {
+            animator.SetBool("isRunning", true);
             gameObject.transform.forward = move;
+        } else {
+            animator.SetBool("isRunning", false);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
