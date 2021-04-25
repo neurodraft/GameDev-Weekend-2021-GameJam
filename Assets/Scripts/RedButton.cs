@@ -19,6 +19,10 @@ public class RedButton : MonoBehaviour
     // Start is called before  the first frame update
     void Start()
     {
+        if (ui == null)
+        {
+            ui = GameObject.Find("UI").gameObject.GetComponent<UI>();
+        }
         button = transform.Find("Button");
         originalPosition = button.localPosition;
 

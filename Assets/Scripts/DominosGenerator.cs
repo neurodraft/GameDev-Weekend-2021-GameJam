@@ -18,6 +18,11 @@ public class DominosGenerator : MonoBehaviour
     private float baseMass;
     void Start()
     {
+        
+        UI ui = GameObject.Find("UI").gameObject.GetComponent<UI>();
+
+        ui.dominosGenerator = this;
+
         baseMass = dominoDimensions.x * dominoDimensions.y * dominoDimensions.z * dominoDensity;
 
         float previousZ = this.transform.position.z;

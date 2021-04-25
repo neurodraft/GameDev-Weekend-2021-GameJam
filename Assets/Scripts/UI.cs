@@ -26,16 +26,21 @@ public class UI : MonoBehaviour
     private int dominoAmount = 0;
 
     public  TMP_Text dominoAmountText;
+
+    public GameObject[] levels;
+
+    public GameObject currentLevel;
     void Start()
     {
-        
+        currentLevel = Instantiate(levels[0], transform.parent);
     }
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKey(KeyCode.R)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            restartCurrentLevel();
             //Application.LoadLevel (Application.loadedLevel);
         }
  
@@ -56,7 +61,7 @@ public class UI : MonoBehaviour
                 dominoOverlayInstance.transform.Rotate(0, -90f * Time.deltaTime, 0, Space.Self);
             }
             
-
+          
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -109,7 +114,25 @@ public class UI : MonoBehaviour
         dominoAmountText.text = dominoAmount.ToString();
     }
 
-    public void Level1(){
-        
+    public void changeLevel(int levelId)
+    {
+        Destroy(currentLevel);
+        currentLevel = Instantiate(levels[levelId], transform.parent);
+        restoreValues();
     }
+
+    public void restartCurrentLevel()
+    {
+        Destroy(currentLevel);
+        currentLevel = Instantiate(levels[0], transform.parent);
+        restoreValues();
+    }
+
+    private void restoreValues()
+    {
+        dominoScale = 1f;
+        dominoAmount = 0;
+        dominoAmountText.text = dominoAmount.ToString();
+    }
+
 }
