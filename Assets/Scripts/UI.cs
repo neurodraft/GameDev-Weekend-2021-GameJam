@@ -178,4 +178,9 @@ public class UI : MonoBehaviour
         victory.SetActive(true);
         //NextLevel();
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
